@@ -285,13 +285,13 @@ object XGBoost extends Serializable {
       missing: Float,
       keepCondition: Float => Boolean): Iterator[XGBLabeledPoint] = {
     xgbLabelPoints.map { labeledPoint =>
-      val indicesBuilder = new mutable.ArrayBuilder.ofInt()
-      val valuesBuilder = new mutable.ArrayBuilder.ofFloat()
+      val data = new Array[Float](labeledPoint.size)
       for ((value, i) <- labeledPoint.values.zipWithIndex if keepCondition(value)) {
-        indicesBuilder += (if (labeledPoint.indices == null) i else labeledPoint.indices(i))
-        valuesBuilder += value
+        val indice = (if (labeledPoint.indices == null) i else labeledPoint.indices(i))
+        data(indice) = value
       }
-      labeledPoint.copy(indices = indicesBuilder.result(), values = valuesBuilder.result())
+      logger.warn("labeledPoint indices=null, values: [" + data.mkString(",") + "]")
+      labeledPoint.copy(indices = null, values = data)
     }
   }
 

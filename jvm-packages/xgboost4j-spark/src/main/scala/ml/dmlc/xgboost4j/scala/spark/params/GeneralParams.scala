@@ -118,7 +118,7 @@ private[spark] trait GeneralParams extends Params {
       "but instead used a method that preserves zeros in your vector."
   )
 
-  final def getAllowNonZeroForMissingValue: Boolean = $(allowNonZeroForMissing)
+  final def getAllowNonZeroForMissing: Boolean = $(allowNonZeroForMissing)
 
   /**
     * the maximum time to wait for the job requesting new workers. default: 30 minutes
